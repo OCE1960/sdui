@@ -36,9 +36,9 @@ Route::middleware(['auth'])->group(function() {
     Route::controller(NewsController::class)->group(function () {
         Route::get('/news', 'index')->name('news.index');
         Route::get('/news/{id}', 'show')->name('news.show');
-        Route::post('/news', 'show')->name('news.store');
-        Route::post('/news/{id}', 'update')->name('news.update');
-        Route::post('/news/{id}/delete', 'destroy')->name('news.delete');
+        Route::post('/news', 'store')->name('news.store');
+        Route::put('/news/{id}', 'update')->name('news.update');
+        Route::delete('/news/{id}/delete', 'destroy')->name('news.delete');
     });
 
 });

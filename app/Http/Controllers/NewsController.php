@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+
 use App\Events\NewsCreated;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
-use App\Http\Controllers\Controller;
 use App\Models\News;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -42,7 +45,7 @@ class NewsController extends Controller
 
         NewsCreated::dispatch($user);
 
-        return $this->sendSuccessMessage('News Record Successfully Created');
+        return $this->sendSuccessMessage('News Record Successfully Created', 201);
     }
 
     /**
@@ -56,7 +59,7 @@ class NewsController extends Controller
         $news = News::find($id);
 
         if (empty($news)) { 
-           return $this->sendErrorResponse(['News Record does not exist']);
+           return $this->send404Response('News Record does not exist');
         }
 
        $data = ['news' => $news];
@@ -95,7 +98,7 @@ class NewsController extends Controller
      * @param  \App\Models\News  $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
         $news= News::find($id);
         $user = Auth::user();

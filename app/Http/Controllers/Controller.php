@@ -31,12 +31,21 @@ class Controller extends BaseController
         return response()->json($response, $code);
     }
 
-    public function sendSuccessMessage($message)
+    public function send404Response($message="Error Response ", $code = 404)
+    {
+        $response =  [
+            'success' => false,
+            'message' => $message,
+        ];
+        return response()->json($response, $code);
+    }
+
+    public function sendSuccessMessage($message, $code = 200)
     {
         return response()->json([
             'success' => true,
             'message' => $message
-        ], 200);
+        ], $code);
     }
 
     public function array_flatten($array) 
